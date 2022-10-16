@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.qameta.allure.gradle.allure:allure-plugin:2.11.0"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: "io.qameta.allure"
+
+ext {
+    testNg = "7.6.1"
+    selenide = "6.9.0"
+    allure = "2.19.0"
+    lombok = "1.18.24"
+    slf4j = "2.0.3"
+}
+
+dependencies {
+    implementation group: 'org.testng', name: 'testng', version: "${testNg}"
+    implementation group: 'com.codeborne', name: 'selenide', version: "${selenide}"
+    implementation group: 'com.codeborne', name: 'selenide-testng', version: "${selenide}"
+    implementation group: 'io.qameta.allure', name: 'allure-selenide', version: "${allure}"
+    implementation group: 'io.qameta.allure', name: 'allure-testng', version: "${allure}"
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombok}"
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombok}"
+    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombok}"
+    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombok}"
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: "${slf4j}"
+}
+
+allure {
+    version = "${allure}"
+}
+
+test {
+    useTestNG()
+}
